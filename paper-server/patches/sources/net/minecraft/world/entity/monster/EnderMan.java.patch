@@ -83,7 +83,7 @@
  
                  return flag;
              }
-@@ -397,6 +_,16 @@
+@@ -397,9 +_,19 @@
          this.entityData.set(DATA_STARED_AT, true);
      }
  
@@ -99,7 +99,11 @@
 +
      @Override
      public boolean requiresCustomPersistence() {
-         return super.requiresCustomPersistence() || this.getCarriedBlock() != null;
+-        return super.requiresCustomPersistence() || this.getCarriedBlock() != null;
++        return super.requiresCustomPersistence();
+     }
+ 
+     static class EndermanFreezeWhenLookedAt extends Goal {
 @@ -455,16 +_,19 @@
              int floor1 = Mth.floor(this.enderman.getY() + random.nextDouble() * 2.0);
              int floor2 = Mth.floor(this.enderman.getZ() - 1.0 + random.nextDouble() * 2.0);
