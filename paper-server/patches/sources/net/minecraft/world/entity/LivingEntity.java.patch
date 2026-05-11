@@ -996,7 +996,7 @@
                  deltaMovement.z / 2.0 - deltaVector.z
              );
 +            Vec3 diff = finalVelocity.subtract(deltaMovement);
-+            io.papermc.paper.event.entity.EntityKnockbackEvent event = CraftEventFactory.callEntityKnockbackEvent((org.bukkit.craftbukkit.entity.CraftLivingEntity)this.getBukkitEntity(), attacker, attacker, eventCause, power, diff);
++            io.papermc.paper.event.entity.EntityKnockbackEvent event = CraftEventFactory.callEntityKnockbackEvent(this.getBukkitEntity(), attacker, attacker, eventCause, power, diff);
 +            // Paper end - knockback events
 +            if (event.isCancelled()) {
 +                return;
