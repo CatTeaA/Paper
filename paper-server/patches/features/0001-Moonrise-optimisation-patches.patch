@@ -30952,7 +30952,7 @@ index 254a967292938a9ed6a0291bbc9cf6e971eeaf01..416646f15ceea04fbbb5a5b0044c2a49
  
      @Nullable ChunkAccess getChunkIfLoadedImmediately(int x, int z); // Paper - ifLoaded api (we need this since current impl blocks if the chunk is loading)
 diff --git a/net/minecraft/world/level/ServerExplosion.java b/net/minecraft/world/level/ServerExplosion.java
-index 26a6c4b49b0c7737935d152ff941604c712b50a2..34d7eef8b2540172bd4dcdbf80df45e9cbfcb43c 100644
+index bba941ac4490f3a6802fb1eb53ae4770354a5bb5..08fe61180d61f60110822eb1397a311e60e72db9 100644
 --- a/net/minecraft/world/level/ServerExplosion.java
 +++ b/net/minecraft/world/level/ServerExplosion.java
 @@ -54,6 +54,249 @@ public class ServerExplosion implements Explosion {
@@ -31356,7 +31356,7 @@ index 26a6c4b49b0c7737935d152ff941604c712b50a2..34d7eef8b2540172bd4dcdbf80df45e9
      }
  
      private void hurtEntities() {
-@@ -342,6 +623,14 @@ public class ServerExplosion implements Explosion {
+@@ -340,6 +621,14 @@ public class ServerExplosion implements Explosion {
      }
  
      public int explode() {
@@ -31371,7 +31371,7 @@ index 26a6c4b49b0c7737935d152ff941604c712b50a2..34d7eef8b2540172bd4dcdbf80df45e9
          this.level.gameEvent(this.source, GameEvent.EXPLODE, this.center);
          List<BlockPos> toBlow = this.calculateExplodedPositions();
          this.hurtEntities();
-@@ -356,6 +645,13 @@ public class ServerExplosion implements Explosion {
+@@ -354,6 +643,13 @@ public class ServerExplosion implements Explosion {
              this.createFire(toBlow);
          }
  
@@ -31385,7 +31385,7 @@ index 26a6c4b49b0c7737935d152ff941604c712b50a2..34d7eef8b2540172bd4dcdbf80df45e9
          return toBlow.size();
      }
  
-@@ -438,12 +734,12 @@ public class ServerExplosion implements Explosion {
+@@ -436,12 +732,12 @@ public class ServerExplosion implements Explosion {
      // Paper start - Optimize explosions
      private float getBlockDensity(Vec3 vec3d, Entity entity) {
          if (!this.level.paperConfig().environment.optimizeExplosions) {
