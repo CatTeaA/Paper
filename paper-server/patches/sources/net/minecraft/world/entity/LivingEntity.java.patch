@@ -914,7 +914,7 @@
              );
 +            // Paper start - knockback events
 +            Vec3 knockback = targetMovement.subtract(deltaMovement);
-+            io.papermc.paper.event.entity.EntityKnockbackEvent event = CraftEventFactory.callEntityKnockbackEvent((org.bukkit.craftbukkit.entity.CraftLivingEntity) this.getBukkitEntity(), attacker, attacker, eventCause, power, knockback);
++            io.papermc.paper.event.entity.EntityKnockbackEvent event = CraftEventFactory.callEntityKnockbackEvent(this.getBukkitEntity(), attacker, attacker, eventCause, power, knockback);
 +            if (event.isCancelled()) {
 +                return;
 +            }

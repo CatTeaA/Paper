@@ -23832,7 +23832,7 @@ index 9d9fa99ff7694a3356421df711c7b1443047b057..c79206e0eb455081f63cf4de2c974136
      }
  
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 23e51ce53e9b1b4f52d49749c13ccaae539c4f0e..afe68487585e5fc2766a10bf69e085f51d498990 100644
+index 196f47bb89a49e4d053cabad62059836823e6c21..82eb863da02d58b7643cd1ebd6b2f642b3474c5d 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -189,7 +189,7 @@ import net.minecraft.world.scores.ScoreboardSaveData;
@@ -28432,7 +28432,7 @@ index a46b89895a9ce86b6f5fabd373a4e91919d88033..22b10500ef74694243a4fec40822bb54
          // Paper start - PlayerChunkLoadEvent
          if (io.papermc.paper.event.packet.PlayerChunkLoadEvent.getHandlerList().getRegisteredListeners().length > 0) {
 diff --git a/net/minecraft/server/network/config/PrepareSpawnTask.java b/net/minecraft/server/network/config/PrepareSpawnTask.java
-index af2509ed6ca1b9ed68c67bd682de3823ccb09088..d91d7d438dd79c64827de7cdfbaeb8c8b0896a48 100644
+index 3271c83bd103bea9b9ffcd6882b52896ea4da770..f6601bc30fa37a309923ea9883b04233f83b2c0b 100644
 --- a/net/minecraft/server/network/config/PrepareSpawnTask.java
 +++ b/net/minecraft/server/network/config/PrepareSpawnTask.java
 @@ -165,7 +165,7 @@ public class PrepareSpawnTask implements ConfigurationTask {
@@ -30940,7 +30940,7 @@ index 254a967292938a9ed6a0291bbc9cf6e971eeaf01..416646f15ceea04fbbb5a5b0044c2a49
  
      @Nullable ChunkAccess getChunkIfLoadedImmediately(int x, int z); // Paper - ifLoaded api (we need this since current impl blocks if the chunk is loading)
 diff --git a/net/minecraft/world/level/ServerExplosion.java b/net/minecraft/world/level/ServerExplosion.java
-index def5a92046a663e53b29f9863c541ddc30ee9d3a..91bb2ac15b9e9350552f4eeb9573c2f564854ce4 100644
+index b9df15e886078cc9c0020d6894ed7075e2aa1c58..e7489aa470ae30d1206304b30f4a8755638da4b4 100644
 --- a/net/minecraft/world/level/ServerExplosion.java
 +++ b/net/minecraft/world/level/ServerExplosion.java
 @@ -54,6 +54,249 @@ public class ServerExplosion implements Explosion {
@@ -31343,7 +31343,7 @@ index def5a92046a663e53b29f9863c541ddc30ee9d3a..91bb2ac15b9e9350552f4eeb9573c2f5
      }
  
      private void hurtEntities() {
-@@ -341,6 +623,14 @@ public class ServerExplosion implements Explosion {
+@@ -339,6 +621,14 @@ public class ServerExplosion implements Explosion {
      }
  
      public int explode() {
@@ -31358,7 +31358,7 @@ index def5a92046a663e53b29f9863c541ddc30ee9d3a..91bb2ac15b9e9350552f4eeb9573c2f5
          this.level.gameEvent(this.source, GameEvent.EXPLODE, this.center);
          List<BlockPos> toBlow = this.calculateExplodedPositions();
          this.hurtEntities();
-@@ -355,6 +645,13 @@ public class ServerExplosion implements Explosion {
+@@ -353,6 +643,13 @@ public class ServerExplosion implements Explosion {
              this.createFire(toBlow);
          }
  
@@ -31372,7 +31372,7 @@ index def5a92046a663e53b29f9863c541ddc30ee9d3a..91bb2ac15b9e9350552f4eeb9573c2f5
          return toBlow.size();
      }
  
-@@ -437,12 +734,12 @@ public class ServerExplosion implements Explosion {
+@@ -435,12 +732,12 @@ public class ServerExplosion implements Explosion {
      // Paper start - Optimize explosions
      private float getBlockDensity(Vec3 vec3d, Entity entity) {
          if (!this.level.paperConfig().environment.optimizeExplosions) {
