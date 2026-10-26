@@ -2238,7 +2238,7 @@ public class CraftEventFactory {
 
         if (livingEntity != null) {
             final Vector currentVelocity = livingEntity.getVelocity();
-            final Vector legacyFinalKnockback = currentVelocity.add(apiKnockback);
+            final Vector legacyFinalKnockback = currentVelocity.clone().add(apiKnockback);
             final org.bukkit.event.entity.EntityKnockbackEvent.KnockbackCause legacyCause = org.bukkit.event.entity.EntityKnockbackEvent.KnockbackCause.valueOf(cause.name());
 
             legacyEvent = pusher != null
@@ -2253,7 +2253,7 @@ public class CraftEventFactory {
         if (attacker != null) {
             event = livingEntity != null
                 ? new com.destroystokyo.paper.event.entity.EntityKnockbackByEntityEvent(livingEntity, attacker.getBukkitEntity(), cause, (float) force, apiKnockback)
-                : new io.papermc.paper.event.entity.EntityPushedByEntityAttackEvent(entity, cause, pusher.getBukkitEntity(), apiKnockback);
+                : new io.papermc.paper.event.entity.EntityPushedByEntityAttackEvent(entity, cause, attacker.getBukkitEntity(), apiKnockback);
         } else {
             event = new io.papermc.paper.event.entity.EntityKnockbackEvent(entity, cause, apiKnockback);
         }
