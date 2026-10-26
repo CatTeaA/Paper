@@ -2232,31 +2232,34 @@ public class CraftEventFactory {
     }
 
     public static io.papermc.paper.event.entity.EntityKnockbackEvent callEntityKnockbackEvent(CraftEntity entity, Entity pusher, Entity attacker, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause cause, double force, Vec3 knockback) {
+        final CraftLivingEntity livingEntity = entity instanceof CraftLivingEntity living ? living : null;
         Vector apiKnockback = CraftVector.toBukkit(knockback);
-        final Vector currentVelocity = entity.getVelocity();
         EntityKnockbackEvent legacyEvent = null;
-        if (entity instanceof CraftLivingEntity livingEntity) {
+
+        if (livingEntity != null) {
+            final Vector currentVelocity = livingEntity.getVelocity();
             final Vector legacyFinalKnockback = currentVelocity.clone().add(apiKnockback);
             final org.bukkit.event.entity.EntityKnockbackEvent.KnockbackCause legacyCause = org.bukkit.event.entity.EntityKnockbackEvent.KnockbackCause.valueOf(cause.name());
-            if (pusher != null) {
-                legacyEvent = new EntityKnockbackByEntityEvent(livingEntity, pusher.getBukkitEntity(), legacyCause, force, apiKnockback, legacyFinalKnockback);
-            } else {
-                legacyEvent = new EntityKnockbackEvent(livingEntity, legacyCause, force, apiKnockback, legacyFinalKnockback);
-            }
+
+            legacyEvent = pusher != null
+                ? new EntityKnockbackByEntityEvent(livingEntity, pusher.getBukkitEntity(), legacyCause, force, apiKnockback, legacyFinalKnockback)
+                : new EntityKnockbackEvent(livingEntity, legacyCause, force, apiKnockback, legacyFinalKnockback);
+
             legacyEvent.callEvent();
+            apiKnockback = legacyEvent.getFinalKnockback().subtract(currentVelocity);
         }
+
         final io.papermc.paper.event.entity.EntityKnockbackEvent event;
-        apiKnockback = legacyEvent != null ? legacyEvent.getFinalKnockback().subtract(currentVelocity) : apiKnockback;
         if (attacker != null) {
-            if (entity instanceof CraftLivingEntity) {
-                event = new com.destroystokyo.paper.event.entity.EntityKnockbackByEntityEvent((CraftLivingEntity) entity, attacker.getBukkitEntity(), cause, (float) force, apiKnockback);
-            } else {
-                event = new io.papermc.paper.event.entity.EntityPushedByEntityAttackEvent(entity, cause, pusher.getBukkitEntity(), apiKnockback);
-            }
+            event = livingEntity != null
+                ? new com.destroystokyo.paper.event.entity.EntityKnockbackByEntityEvent(livingEntity, attacker.getBukkitEntity(), cause, (float) force, apiKnockback)
+                : new io.papermc.paper.event.entity.EntityPushedByEntityAttackEvent(entity, cause, attacker.getBukkitEntity(), apiKnockback);
         } else {
             event = new io.papermc.paper.event.entity.EntityKnockbackEvent(entity, cause, apiKnockback);
         }
-        event.setCancelled(legacyEvent != null && legacyEvent.isCancelled());
+        if (legacyEvent != null) {
+            event.setCancelled(legacyEvent.isCancelled());
+        }
         event.callEvent();
         return event;
     }
